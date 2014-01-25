@@ -1,13 +1,12 @@
 {
-
+	"name" : "plfort/groovesharkapi",
 	"require" : {
 		"php" : ">=5.2",
-		"ext-curl": "*"
+		"ext-curl" : "*"
 	},
 	"autoload" : {
 		"psr-0" : {
 			"plfort" : "src/"
 		}
-	},
-	
+	}
 }
