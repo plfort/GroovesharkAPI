@@ -37,3 +37,4 @@ If you have found a bug file it using Github Issues. Feel free to ping [James on
 
 If you're running into problems with your key, if you're hitting rate limits, or if you're confused, contact support@grooveshark.com.
 They'll be more than happy to help! Sometimes you'll even get a response from James.
+
