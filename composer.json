@@ -1,0 +1,13 @@
+{
+
+	"require" : {
+		"php" : ">=5.2",
+		"ext-curl": "*"
+	},
+	"autoload" : {
+		"psr-0" : {
+			"plfort" : "src/"
+		}
+	},
+	
+}
