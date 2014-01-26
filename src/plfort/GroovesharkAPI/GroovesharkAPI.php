@@ -75,7 +75,7 @@ class GroovesharkAPI {
 	 * Set the current session for use with methods
 	 */
 	public function setSession($sessionID) {
-		$this->$sessionID = $sessionID;
+		$this->sessionID = $sessionID;
 	}
 
 	/*
@@ -150,7 +150,7 @@ class GroovesharkAPI {
 		}
 		$args = array (
 				'login' => $username,
-				'password' => md5 ( $password )
+				'password' => $password
 		);
 		$result = $this->makeCall ( 'authenticate', $args, null, true );
 		if (empty ( $result ['UserID'] )) {
@@ -158,6 +158,7 @@ class GroovesharkAPI {
 		}
 		return $result;
 	}
+
 	// backwards-compatible
 	public function login($username, $password) {
 		return $this->authenticate ( $username, $password );
@@ -781,7 +782,7 @@ class GroovesharkAPI {
 		if (! empty ( $this->sessionID )) {
 			$payload ['header'] ['sessionID'] = $this->sessionID;
 		} else {
-			if ($this->sessionID !== false) {
+			if ($this->sessionID !== null) {
 				throw new GroovesharkException ( "$method requires a valid sessionID: '{$this->sessionID}' is not valid." );
 			}
 		}
@@ -797,7 +798,7 @@ class GroovesharkAPI {
 			$scheme = "http://";
 		}
 		$sig = $this->createMessageSig ( $postData );
-		$url = $scheme . $host . self::API_ENDPOINT . "?sig=$sig";
+		$url = $scheme . self::API_HOST . self::API_ENDPOINT . "?sig=$sig";
 		curl_setopt ( $c, CURLOPT_URL, $url );
 
 		curl_setopt ( $c, CURLOPT_RETURNTRANSFER, 1 );
@@ -836,4 +837,4 @@ class GroovesharkAPI {
 		return hash_hmac ( 'md5', $params, $this->wsSecret );
 	}
 }
-?>
+

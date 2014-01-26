@@ -27,8 +27,4 @@ class GroovesharkException extends \Exception{
 	public function getGsMmessage() {
 		return $this->gsMmessage;
 	}
-
-
-
-
 }
