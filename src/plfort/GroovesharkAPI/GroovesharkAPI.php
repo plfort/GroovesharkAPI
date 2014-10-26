@@ -826,18 +826,20 @@ class GroovesharkAPI
     protected function makeCall($method, $args = array(), $resultKey = null, $https = false)
     {
 
-        if(empty($this->sessionID)){
-            throw new GroovesharkException("$method requires a valid sessionID: '{$this->sessionID}' is not valid.");
-        }
-        
         $payload = array(
             'method' => $method,
             'parameters' => $args,
             'header' => array(
                 'wsKey' => $this->wsKey,
-                'sessionID'=>$this->sessionID
+              
             )
         );
+
+        if(empty($this->sessionID) && $method != 'startSession' ){
+            throw new GroovesharkException("$method requires a valid sessionID: '{$this->sessionID}' is not valid.");
+        }else{
+            $payload['header']['sessionID']= $this->sessionID;
+        }
         
         $c = curl_init();
         $postData = json_encode($payload);
