@@ -33,9 +33,9 @@ class GroovesharkAPI
 
     private $wsSecret = "1a79a4d60de6718e8e5b326e338ae533";
 
-    private $sessionID = null;
+    protected $sessionID = null;
 
-    private $country;
+    protected $country;
 
     function __construct($key = null, $secret = null, $sessionID = null, $country = null)
     {
