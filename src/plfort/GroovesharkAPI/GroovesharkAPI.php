@@ -15,6 +15,7 @@ namespace plfort\GroovesharkAPI;
  *            - Add GroovesharkException for error handling
  *            - Add namespace
  *            - Remove dns cache
+ *            - Add Oauth method
  *           
  *           
  */
@@ -25,6 +26,7 @@ class GroovesharkAPI
 
     const API_ENDPOINT = "/ws3.php";
 
+    const OAUTH_URL = "https://auth.grooveshark.com/";
     /**
      * Your key and secret will be provided by Grooveshark.
      * Fill them in below or pass them to the constructor.
@@ -176,10 +178,24 @@ class GroovesharkAPI
         return $result;
     }
     
+    public function getOAuthAutenticateUrl($callbackUrl){
+         return sprintf("%s?app=%s&callback=%s",self::OAUTH_URL,urlencode($this->wsKey),urlencode($callbackUrl));
+    }
+    
     // backwards-compatible
-    public function login($username, $password)
+    public function authenticateToken($token)
     {
-        return $this->authenticate($username, $password);
+       if (empty($token)) {
+            return array();
+        }
+        $args = array(
+            'token' => $token,
+        );
+        $result = $this->makeCall('authenticateToken', $args, null, true);
+        if (empty($result['UserID'])) {
+            return array();
+        }
+        return $result;
     }
     
     /*
@@ -898,4 +914,3 @@ class GroovesharkAPI
         return hash_hmac('md5', $params, $this->wsSecret);
     }
 }
-
